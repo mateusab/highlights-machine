@@ -1,14 +1,32 @@
 package main
 
-import "fmt"
-import "os"
+import (
+	"fmt"
+	"os"
+
+	dem "github.com/markus-wa/demoinfocs-golang"
+	// events "github.com/markus-wa/demoinfocs-golang/events"
+)
 
 func main() {
-	fmt.Printf("hello, world\n")
+	// pega os argumentos passados como parametro
+	args := os.Args[1:]
 
-	//pega os argumentos passados como parametro
-    args := os.Args[1:]
+	// abre a demo
+	f, err := os.Open("./demos/mibr-vs-eunited.dem")
+	if err != nil {
+		panic(err)
+	}
 
-	//printa os argumentos
-    fmt.Println("demo: ", args)
+	defer f.Close()
+
+	p := dem.NewParser(f)
+	header, err := p.ParseHeader()
+	fmt.Println("Nome da demo: ", args, "\nMapa: ", header.MapName)
+
+	// parse to end
+	err = p.ParseToEnd()
+	if err != nil {
+		panic(err)
+	}
 }
