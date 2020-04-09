@@ -57,12 +57,12 @@ func main() {
 	//Registro de término de round
 	p.RegisterEventHandler(func(e events.RoundEndOfficial) {
 		roundEnd = round
-		// fmt.Println("ROUND ATUAL:", roundEnd)
+		fmt.Println("ROUND ATUAL:", roundEnd)
 	})
 
 	if roundStart == roundEnd {
 		p.RegisterEventHandler(func(e events.Kill) {
-			// player[e.Killer.Name].round[roundEnd].kills++
+			fmt.Println(e.Killer, "killed", e.Victim, "with", e.Weapon)
 		})
 
 	}
@@ -74,11 +74,6 @@ func main() {
 	}
 
 	printFinalFrags(player)
-
-	// printFinalFrags(player)
-	// for i, entry := range player {
-	// 	fmt.Println(entry.plName)
-	// }
 
 }
 
@@ -123,12 +118,3 @@ func getChatHistory(p *dem.Parser) {
 		fmt.Println(e.Sender, ":", e.Text)
 	})
 }
-
-// func index(w http.ResponseWriter, r *http.Request) {
-// 	tpl, _ := template.ParseFiles("index.html")
-// 	data := map[string]string{
-// 		"Title": "Highlights Machine",
-// 	}
-// 	w.WriteHeader(http.StatusOK)
-// 	tpl.Execute(w, data)
-// }
