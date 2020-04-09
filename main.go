@@ -22,14 +22,14 @@ type RoundStructure struct {
 }
 
 func main() {
-	// http.HandleFunc("/", index)
-	// http.ListenAndServe(":8080", nil)
-
 	// pega os argumentos passados como parametro
 	args := os.Args[1:]
-
 	// abre a demo
-	f, err := os.Open("./demos/demo.dem")
+	fmt.Println(args)
+
+	demoPath := getDemoPath(args)
+
+	f, err := os.Open(demoPath)
 	if err != nil {
 		panic(err)
 	}
@@ -75,6 +75,15 @@ func main() {
 
 	printFinalFrags(player)
 
+}
+
+func getDemoPath(args []string) string {
+
+	if len(args) > 0 {
+		return "demos/" + args[0] + ".dem"
+	} else {
+		return "demos/demo.dem"
+	}
 }
 
 func diedBlind(e events.Kill, tickNumber int) {
